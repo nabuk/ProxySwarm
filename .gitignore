@@ -17,6 +17,7 @@ Packages.dgml
 *.vsmdi
 *.testrunconfig
 *.docstates
+*.Designer.cs
 *.[Rr]e[Ss]harper*
 *.dotCover
 *.DotSettings
