@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProxySwarm.WpfApp.Core;
+using ProxySwarm.WpfApp.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ProxySwarm.WpfApp
 {
@@ -24,7 +13,7 @@ namespace ProxySwarm.WpfApp
         {
             InitializeComponent();
 
-            this.DataContext = new ProxySwarm.WpfApp.ViewModels.MainViewModel();
+            this.DataContext = new MainViewModel(new UIInvoker(this.Dispatcher));
         }
     }
 }

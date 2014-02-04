@@ -16,10 +16,10 @@
         
         <UniformGrid Columns="2" Rows="2"
                      Margin="10">
-            <uc:BigIndicatorControl LabelText="Successes" IndicatorText="0" Foreground="#8B1" />
-            <uc:BigIndicatorControl LabelText="Fails" IndicatorText="0" Foreground="#C30" />
-            <uc:BigIndicatorControl LabelText="Proxies" IndicatorText="6231" Foreground="{StaticResource InactiveFontColorBrush}" />
-            <uc:BigIndicatorControl LabelText="Tasks" IndicatorText="23" Foreground="{StaticResource InactiveFontColorBrush}" />
+            <uc:BigIndicatorControl LabelText="Successes" IndicatorText="{Binding SuccessCount, Mode=OneWay}" Foreground="#8B1" />
+            <uc:BigIndicatorControl LabelText="Fails" IndicatorText="{Binding FailCount, Mode=OneWay}" Foreground="#C30" />
+            <uc:BigIndicatorControl LabelText="Proxies" IndicatorText="{Binding ProxyCount, Mode=OneWay}" Foreground="{StaticResource InactiveFontColorBrush}" />
+            <uc:BigIndicatorControl LabelText="Tasks" IndicatorText="{Binding TaskCount, Mode=OneWay}" Foreground="{StaticResource InactiveFontColorBrush}" />
         </UniformGrid>
     </DockPanel>
 </Window>

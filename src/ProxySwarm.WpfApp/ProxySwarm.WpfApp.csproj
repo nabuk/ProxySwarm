@@ -57,6 +57,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\DelegateCommand.cs" />
+    <Compile Include="Core\IUIInvoker.cs" />
+    <Compile Include="Core\UIInvoker.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="Controls\BigIndicatorControl.xaml">
