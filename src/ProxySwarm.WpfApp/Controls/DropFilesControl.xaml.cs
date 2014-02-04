@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ProxySwarm.WpfApp.Controls
 {
@@ -16,7 +17,17 @@ namespace ProxySwarm.WpfApp.Controls
         {
             var eventArgs = new FilesPickedEventArgs(DropFilesControl.FilesPickedEvent, fileNames);
             RaiseEvent(eventArgs);
+
+            var cmd = this.FilesPickedCommand;
+            if (cmd != null && cmd.CanExecute(fileNames))
+                cmd.Execute(fileNames);
         }
+
+        public static readonly DependencyProperty FilesPickedCommandProperty = DependencyProperty.Register(
+          "FilesPickedCommand",
+          typeof(ICommand),
+          typeof(DropFilesControl),
+          new FrameworkPropertyMetadata(null));
 
         public DropFilesControl()
         {
@@ -27,6 +38,12 @@ namespace ProxySwarm.WpfApp.Controls
         {
             add { AddHandler(FilesPickedEvent, value); }
             remove { RemoveHandler(FilesPickedEvent, value); }
+        }
+
+        public ICommand FilesPickedCommand
+        {
+            get { return (ICommand)GetValue(FilesPickedCommandProperty); }
+            set { SetValue(FilesPickedCommandProperty, value); }
         }
 
         private void BrowseFilesLink_Click(object sender, RoutedEventArgs e)

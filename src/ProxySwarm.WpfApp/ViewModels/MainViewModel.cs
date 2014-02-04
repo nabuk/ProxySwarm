@@ -15,11 +15,19 @@ namespace ProxySwarm.WpfApp.ViewModels
             throw new NotImplementedException();
         }
 
+        private void FilesPickedHandler(string[] fileNames)
+        {
+            throw new NotImplementedException();
+        }
+
         public MainViewModel()
         {
             this.PlayPauseCommand = new DelegateCommand(this.PlayPauseHandler);
+            this.FilesPickedCommand = new DelegateCommand<string[]>(this.FilesPickedHandler);
         }
 
         public ICommand PlayPauseCommand { get; private set; }
+
+        public ICommand FilesPickedCommand { get; private set; }
     }
 }

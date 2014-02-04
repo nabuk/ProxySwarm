@@ -11,7 +11,7 @@
         <DockPanel DockPanel.Dock="Right" Width="110" Margin="10">
             <uc:PlayPauseControl DockPanel.Dock="Bottom" Margin="10" Height="50"
                                  PlayPauseCommand="{Binding PlayPauseCommand, Mode=OneTime}" />
-            <uc:DropFilesControl />
+            <uc:DropFilesControl FilesPickedCommand="{Binding FilesPickedCommand, Mode=OneTime}" />
         </DockPanel>
         
         <UniformGrid Columns="2" Rows="2"
