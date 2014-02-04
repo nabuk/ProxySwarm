@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using ProxySwarm.WpfApp.Core.EventArgs;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -49,5 +48,18 @@ namespace ProxySwarm.WpfApp.Controls
                 this.RaiseFilesPickedEvent(fileNames);
             }
         }
+
+        public class FilesPickedEventArgs : RoutedEventArgs
+        {
+            public FilesPickedEventArgs(RoutedEvent routedEvent, string[] fileNames)
+                : base(routedEvent)
+            {
+                this.FileNames = fileNames;
+            }
+
+            public string[] FileNames { get; private set; }
+        }
+
+        public delegate void FilesPickedEventHandler(object sender, FilesPickedEventArgs e);
     }
 }

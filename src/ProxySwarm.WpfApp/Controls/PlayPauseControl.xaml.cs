@@ -43,6 +43,11 @@ namespace ProxySwarm.WpfApp.Controls
             ctrl.RaiseEvent(eventArgs);
         }
 
+        private void PlayPauseControl_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsPlaying = !this.IsPlaying;
+        }
+
         public PlayPauseControl()
         {
             InitializeComponent();
@@ -64,11 +69,6 @@ namespace ProxySwarm.WpfApp.Controls
         {
             add { AddHandler(StopEvent, value); }
             remove { RemoveHandler(StopEvent, value); }
-        }
-
-        private void PlayPauseControl_Click(object sender, RoutedEventArgs e)
-        {
-            this.IsPlaying = !this.IsPlaying;
         }
     }
 }

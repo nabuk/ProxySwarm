@@ -24,13 +24,7 @@ namespace ProxySwarm.WpfApp
         {
             InitializeComponent();
 
-            this.AllowDrop = true;
-
-            this.Drop += (s, e) =>
-                {
-                    var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                };
+            this.DataContext = new ProxySwarm.WpfApp.ViewModels.MainViewModel();
         }
     }
 }

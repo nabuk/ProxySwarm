@@ -8,7 +8,7 @@
              d:DesignHeight="200" d:DesignWidth="200"
              Background="Transparent">
 
-    <Button Click="PlayPauseControl_Click">
+    <Button x:Name="PlayPauseButton" Click="PlayPauseControl_Click">
         <Button.Template>
             <ControlTemplate TargetType="Button">
                 <ContentPresenter Content="{TemplateBinding Content}" />
