@@ -43,6 +43,18 @@ namespace ProxySwarm.WpfApp.Controls
             ctrl.RaiseEvent(eventArgs);
         }
 
+        public static readonly DependencyProperty PlayPauseCommandProperty = DependencyProperty.Register(
+          "PlayPauseCommand",
+          typeof(ICommand),
+          typeof(PlayPauseControl),
+          new FrameworkPropertyMetadata(null, OnPlayPauseCommandChanged));
+
+        private static void OnPlayPauseCommandChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = (PlayPauseControl)o;
+            ctrl.PlayPauseButton.Command = ctrl.PlayPauseCommand;
+        }
+
         private void PlayPauseControl_Click(object sender, RoutedEventArgs e)
         {
             this.IsPlaying = !this.IsPlaying;
@@ -69,6 +81,12 @@ namespace ProxySwarm.WpfApp.Controls
         {
             add { AddHandler(StopEvent, value); }
             remove { RemoveHandler(StopEvent, value); }
+        }
+
+        public ICommand PlayPauseCommand
+        {
+            get { return (ICommand)GetValue(PlayPauseCommandProperty); }
+            set { SetValue(PlayPauseCommandProperty, value); }
         }
     }
 }

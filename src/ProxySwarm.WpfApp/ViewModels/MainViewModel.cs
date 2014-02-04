@@ -12,7 +12,7 @@ namespace ProxySwarm.WpfApp.ViewModels
     {
         private void PlayPauseHandler()
         {
-            "".ToString();
+            throw new NotImplementedException();
         }
 
         public MainViewModel()
