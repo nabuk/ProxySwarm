@@ -8,8 +8,8 @@ namespace ProxySwarm.Domain
         {
             if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("address cannot be null or whitespace.");
 
-            Address = address;
-            Port = port;
+            this.Address = address;
+            this.Port = port;
         }
 
         public string Address { get; private set; }
