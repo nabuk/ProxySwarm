@@ -12,11 +12,15 @@ namespace ProxySwarm.Domain
         private readonly ConcurrentDictionary<Proxy, byte> dictionary = new ConcurrentDictionary<Proxy, byte>();
         private readonly ConcurrentBag<Proxy> bag = new ConcurrentBag<Proxy>();
 
-        public void Add(params Proxy[] proxies)
+        public bool Add(Proxy proxy)
         {
-            foreach(var proxy in proxies)
-                if (this.dictionary.TryAdd(proxy, 0))
-                    this.bag.Add(proxy);
+            if (this.dictionary.TryAdd(proxy, 0))
+            {
+                this.bag.Add(proxy);
+                return true;
+            }
+            else
+                return false;
         }
 
         public Proxy Pop()
