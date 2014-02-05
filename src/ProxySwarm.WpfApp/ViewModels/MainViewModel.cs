@@ -13,6 +13,9 @@ namespace ProxySwarm.WpfApp.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        private readonly ICommand playPauseCommand;
+        private readonly ICommand filesPickedCommand;
+
         private void PlayPauseHandler()
         {
             throw new NotImplementedException();
@@ -25,13 +28,13 @@ namespace ProxySwarm.WpfApp.ViewModels
 
         public MainViewModel(IUIInvoker uiInvoker) : base(uiInvoker)
         {
-            this.PlayPauseCommand = new DelegateCommand(this.PlayPauseHandler);
-            this.FilesPickedCommand = new DelegateCommand<string[]>(this.FilesPickedHandler);
+            this.playPauseCommand = new DelegateCommand(this.PlayPauseHandler);
+            this.filesPickedCommand = new DelegateCommand<string[]>(this.FilesPickedHandler);
         }
 
-        public ICommand PlayPauseCommand { get; private set; }
+        public ICommand PlayPauseCommand { get { return this.playPauseCommand; } }
 
-        public ICommand FilesPickedCommand { get; private set; }
+        public ICommand FilesPickedCommand { get { return this.filesPickedCommand; } }
 
         public int SuccessCount
         {
