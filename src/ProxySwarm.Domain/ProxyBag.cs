@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,27 @@ namespace ProxySwarm.Domain
 {
     public class ProxyBag
     {
-        public void Add(params Proxy[] proxy)
+        private readonly ConcurrentDictionary<Proxy, byte> dictionary = new ConcurrentDictionary<Proxy, byte>();
+        private readonly ConcurrentBag<Proxy> bag = new ConcurrentBag<Proxy>();
+
+        public void Add(params Proxy[] proxies)
         {
-            throw new NotImplementedException();
+            foreach(var proxy in proxies)
+                if (this.dictionary.TryAdd(proxy, 0))
+                    this.bag.Add(proxy);
         }
 
         public Proxy Pop()
         {
-            throw new NotImplementedException();
+            Proxy result;
+            return this.bag.TryTake(out result) ? result : null;
         }
 
         public int Count
         {
             get
             {
-                throw new NotImplementedException();
+                return this.bag.Count;
             }
         }
     }
