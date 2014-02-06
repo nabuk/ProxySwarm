@@ -9,16 +9,16 @@ namespace ProxySwarm.Domain.ProxyFactory
     {
         public IList<Proxy> RetrieveProxies(string content)
         {
-            Func<Match, Proxy> mapToProxyObject = m =>
-            {
-                var parts = m.Value.Split(':');
-                return new Proxy(parts[0], int.Parse(parts[1]));
-            };
-
             return Regex.Matches(content, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}")
                 .OfType<Match>()
-                .Select(mapToProxyObject)
+                .Select(MapMatchToProxy)
                 .ToArray();
+        }
+
+        private static Proxy MapMatchToProxy(Match match)
+        {
+            var parts = match.Value.Split(':');
+            return new Proxy(parts[0], int.Parse(parts[1]));
         }
     }
 }
