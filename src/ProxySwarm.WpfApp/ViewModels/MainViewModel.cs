@@ -18,12 +18,12 @@ namespace ProxySwarm.WpfApp.ViewModels
 
         private void PlayPauseHandler()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void FilesPickedHandler(string[] fileNames)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public MainViewModel(IUIInvoker uiInvoker) : base(uiInvoker)

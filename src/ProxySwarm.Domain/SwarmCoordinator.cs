@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProxySwarm.Domain.Miscellaneous;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace ProxySwarm.Domain
             this.workerFactory = workerFactory;
             this.maxWorkerCount = maxWorkerCount;
             this.proxyBag = new ProxyBag();
+            this.Status = new SwarmCoordinatorStatus();
         }
 
         public void Start()
@@ -31,6 +33,7 @@ namespace ProxySwarm.Domain
             throw new NotImplementedException();
         }
 
+        public SwarmCoordinatorStatus Status { get; private set; }
 
         #region IDisposable
         public void Dispose()
