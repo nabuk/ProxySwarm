@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Miscellaneous\Publisher.cs" />
     <Compile Include="ProxyFactory\DefaultProxyFactory.cs" />
     <Compile Include="ProxyFactory\IProxyFactory.cs" />
     <Compile Include="IWorkerFactory.cs" />
