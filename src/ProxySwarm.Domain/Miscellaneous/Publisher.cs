@@ -9,25 +9,25 @@ namespace ProxySwarm.Domain.Miscellaneous
 {
     class Publisher<T>
     {
-        private readonly int delay;
+        private readonly TimeSpan delay;
         private readonly CancellationToken cancellationToken;
 
-        private T toPublish;
-        private Task PublishTask;
+        private T data;
+        private Task publishTask;
 
         private void PublishWorkerMethod()
         {
-            while (this.cancellationToken.IsCancellationRequested)
+            while (!this.cancellationToken.IsCancellationRequested)
             {
                 throw new NotImplementedException();
             }
         }
 
-        internal Publisher(int delay, CancellationToken cancellationToken)
+        internal Publisher(TimeSpan delay, CancellationToken cancellationToken)
         {
             this.delay = delay;
             this.cancellationToken = cancellationToken;
-            this.PublishTask = Task.Run((Action)PublishWorkerMethod, cancellationToken);
+            this.publishTask = Task.Run((Action)PublishWorkerMethod, cancellationToken);
         }
 
         internal void Publish(T data)
@@ -35,6 +35,6 @@ namespace ProxySwarm.Domain.Miscellaneous
             throw new NotImplementedException();
         }
 
-        internal event Action<T> NewData = delegate { };
+        internal event Action<T> NewDataAvailable = delegate { };
     }
 }
