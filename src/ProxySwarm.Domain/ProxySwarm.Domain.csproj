@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Miscellaneous\Counter.cs" />
-    <Compile Include="Miscellaneous\Notifier.cs" />
+    <Compile Include="Miscellaneous\RecentBuffer.cs" />
     <Compile Include="ProxyFactory\DefaultProxyFactory.cs" />
     <Compile Include="ProxyFactory\IProxyFactory.cs" />
     <Compile Include="IWorkerFactory.cs" />

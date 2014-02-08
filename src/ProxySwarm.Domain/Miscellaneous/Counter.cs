@@ -14,23 +14,23 @@ namespace ProxySwarm.Domain.Miscellaneous
 
         public Counter()
         {
-            this.Notifier = new Notifier<int>();
+            this.Notifier = new RecentBuffer<int>();
         }
 
         internal void Increment()
         {
             lock (locker)
-                Notifier.Publish(++count);
+                Notifier.Post(++count);
         }
 
         internal void Decrement()
         {
             lock (locker)
-                Notifier.Publish(--count);
+                Notifier.Post(--count);
         }
 
         public int Count { get { return this.count; } }
 
-        public Notifier<int> Notifier { get; private set; }
+        public RecentBuffer<int> Notifier { get; private set; }
     }
 }
