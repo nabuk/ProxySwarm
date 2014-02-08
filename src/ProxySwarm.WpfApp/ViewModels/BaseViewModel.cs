@@ -11,7 +11,7 @@ namespace ProxySwarm.WpfApp.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        private readonly IUIInvoker uiInvoker;
+        protected readonly IUIInvoker uiInvoker;
 
         public BaseViewModel(IUIInvoker uiInvoker)
         {
@@ -23,7 +23,8 @@ namespace ProxySwarm.WpfApp.ViewModels
 
         protected void RaisePropertyChanged([CallerMemberName] string callerMemberName = null)
         {
-            this.uiInvoker.InvokeOnUIThreadAsync(() => this.PropertyChanged(this, new PropertyChangedEventArgs(callerMemberName)));
+            //this.uiInvoker.InvokeOnUIThreadAsync(() => this.PropertyChanged(this, new PropertyChangedEventArgs(callerMemberName)));
+            this.PropertyChanged(this, new PropertyChangedEventArgs(callerMemberName));
         }
         
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

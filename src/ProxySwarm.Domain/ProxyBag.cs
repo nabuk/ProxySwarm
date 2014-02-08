@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProxySwarm.Domain.Miscellaneous;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,38 +10,54 @@ using System.Threading.Tasks.Dataflow;
 
 namespace ProxySwarm.Domain
 {
-    public class ProxyBag
+    public class ProxyBag : IObserver<Proxy>, IDisposable
     {
         private readonly ConcurrentDictionary<Proxy, byte> dictionary = new ConcurrentDictionary<Proxy, byte>();
-        private readonly BufferBlock<Proxy> buffer;
+        private readonly BufferBlock<Proxy> buffer = new BufferBlock<Proxy>();
+        private readonly IDisposable disposableSubscription;
 
-        public ProxyBag(CancellationToken cancellationToken)
+        public ProxyBag(IObservable<Proxy> proxySource)
         {
-            this.buffer = new BufferBlock<Proxy>(new DataflowBlockOptions { CancellationToken = cancellationToken });
+            this.disposableSubscription = proxySource.Subscribe(this);
+            this.Counter = new Counter();
         }
 
-        public bool Add(Proxy proxy)
+        public async Task<Proxy> ReceiveAsync(CancellationToken cancellationToken)
         {
-            if (this.dictionary.TryAdd(proxy, 0))
+            var result = await this.buffer.ReceiveAsync(cancellationToken);
+
+            this.Counter.Decrement();
+            return result;
+        }
+
+        public Counter Counter { get; private set; }
+
+        #region IDisposable
+        public void Dispose()
+        {
+            this.disposableSubscription.Dispose();
+        }
+        #endregion //IDisposable
+
+        #region IObserver<Proxy>
+        void IObserver<Proxy>.OnCompleted()
+        {
+            
+        }
+
+        void IObserver<Proxy>.OnError(Exception error)
+        {
+            throw error;
+        }
+
+        void IObserver<Proxy>.OnNext(Proxy value)
+        {
+            if (this.dictionary.TryAdd(value, 0))
             {
-                this.buffer.Post(proxy);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        public Task<Proxy> GetAsync()
-        {
-            return this.buffer.ReceiveAsync();
-        }
-
-        public int Count
-        {
-            get
-            {
-                return this.buffer.Count;
+                this.Counter.Increment();
+                this.buffer.Post(value);
             }
         }
+        #endregion //IObserver<Proxy>
     }
 }

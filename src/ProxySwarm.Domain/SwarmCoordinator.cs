@@ -10,27 +10,27 @@ namespace ProxySwarm.Domain
 {
     public class SwarmCoordinator : IDisposable
     {
-        private readonly IWorkerFactory workerFactory;
+        private readonly IProxyWorkerFactory proxyWorkerFactory;
         private readonly int maxWorkerCount;
 
         private readonly ProxyBag proxyBag;
 
-        public SwarmCoordinator(IWorkerFactory workerFactory, int maxWorkerCount)
+        public SwarmCoordinator(IProxyWorkerFactory proxyWorkerFactory, IObservable<Proxy> proxySource, int maxWorkerCount)
         {
-            this.workerFactory = workerFactory;
+            this.proxyWorkerFactory = proxyWorkerFactory;
             this.maxWorkerCount = maxWorkerCount;
-            this.proxyBag = new ProxyBag(CancellationToken.None);
-            this.Status = new SwarmCoordinatorStatus();
+            this.proxyBag = new ProxyBag(proxySource);
+            this.Status = new SwarmCoordinatorStatus(this.proxyBag.Counter);
         }
 
         public void Start()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Pause()
         {
-            throw new NotImplementedException();
+            
         }
 
         public SwarmCoordinatorStatus Status { get; private set; }
@@ -38,7 +38,7 @@ namespace ProxySwarm.Domain
         #region IDisposable
         public void Dispose()
         {
-            throw new NotImplementedException();
+            this.proxyBag.Dispose();
         }
         #endregion //IDisposable
     }

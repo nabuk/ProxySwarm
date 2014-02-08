@@ -9,17 +9,17 @@ namespace ProxySwarm.Domain
 {
     public class SwarmCoordinatorStatus
     {
-        public SwarmCoordinatorStatus()
+        public SwarmCoordinatorStatus(Counter proxyCounter)
         {
             this.SuccessCounter = new Counter();
             this.FailCounter = new Counter();
-            this.TaskCounter = new Counter();
-            this.ProxyCounter = new Counter();
+            this.ConnectionCounter = new Counter();
+            this.ProxyCounter = proxyCounter;
         }
 
         public Counter SuccessCounter { get; private set; }
         public Counter FailCounter { get; private set; }
-        public Counter TaskCounter { get; private set; }
+        public Counter ConnectionCounter { get; private set; }
         public Counter ProxyCounter { get; private set; }
     }
 }

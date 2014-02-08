@@ -56,7 +56,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\CounterBindAggregate.cs" />
+    <Compile Include="Core\CounterToPropertyBinder.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
+    <Compile Include="Core\ICounterBind.cs" />
     <Compile Include="Core\IUIInvoker.cs" />
     <Compile Include="Core\UIInvoker.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -129,7 +132,12 @@
   <ItemGroup>
     <Resource Include="appicon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ProxySwarm.Domain\ProxySwarm.Domain.csproj">
+      <Project>{feffa867-86ef-467a-9e9b-6bba13e70619}</Project>
+      <Name>ProxySwarm.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

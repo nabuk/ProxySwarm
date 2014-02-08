@@ -9,5 +9,6 @@ namespace ProxySwarm.WpfApp.Core
     public interface IUIInvoker
     {
         Task InvokeOnUIThreadAsync(Action action);
+        Task YieldBackgroundPriority();
     }
 }

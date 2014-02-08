@@ -20,5 +20,11 @@ namespace ProxySwarm.WpfApp.Core
         {
             return this.uiDispatcher.InvokeAsync(action).Task;
         }
+
+
+        public async Task YieldBackgroundPriority()
+        {
+            await Dispatcher.Yield(DispatcherPriority.Background);
+        }
     }
 }

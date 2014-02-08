@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProxySwarm.Domain
 {
-    public interface IWorkerFactory
+    public interface IProxyWorkerFactory
     {
         Task<bool> CreateWorkerAsync(Proxy proxy);
     }
