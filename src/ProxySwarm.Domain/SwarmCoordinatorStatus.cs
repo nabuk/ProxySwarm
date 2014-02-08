@@ -11,15 +11,15 @@ namespace ProxySwarm.Domain
     {
         public SwarmCoordinatorStatus()
         {
-            this.SuccessCount = new Publisher<int>();
-            this.FailCount = new Publisher<int>();
-            this.TaskCount = new Publisher<int>();
-            this.ProxyCount = new Publisher<int>();
+            this.SuccessCount = new Notifier<int>();
+            this.FailCount = new Notifier<int>();
+            this.TaskCount = new Notifier<int>();
+            this.ProxyCount = new Notifier<int>();
         }
 
-        public Publisher<int> SuccessCount { get; private set; }
-        public Publisher<int> FailCount { get; private set; }
-        public Publisher<int> TaskCount { get; private set; }
-        public Publisher<int> ProxyCount { get; private set; }
+        public Notifier<int> SuccessCount { get; private set; }
+        public Notifier<int> FailCount { get; private set; }
+        public Notifier<int> TaskCount { get; private set; }
+        public Notifier<int> ProxyCount { get; private set; }
     }
 }

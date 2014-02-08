@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProxySwarm.Domain.Miscellaneous
 {
-    public class Publisher<T>
+    public class Notifier<T>
     {
         private readonly object dataLocker = new object();
 

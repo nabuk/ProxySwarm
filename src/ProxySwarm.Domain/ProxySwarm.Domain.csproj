@@ -45,7 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Miscellaneous\Publisher.cs" />
+    <Compile Include="Miscellaneous\Counter.cs" />
+    <Compile Include="Miscellaneous\Notifier.cs" />
     <Compile Include="ProxyFactory\DefaultProxyFactory.cs" />
     <Compile Include="ProxyFactory\IProxyFactory.cs" />
     <Compile Include="IWorkerFactory.cs" />

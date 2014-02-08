@@ -19,7 +19,7 @@ namespace ProxySwarm.Domain
         {
             this.workerFactory = workerFactory;
             this.maxWorkerCount = maxWorkerCount;
-            this.proxyBag = new ProxyBag();
+            this.proxyBag = new ProxyBag(CancellationToken.None);
             this.Status = new SwarmCoordinatorStatus();
         }
 
