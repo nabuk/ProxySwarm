@@ -10,27 +10,26 @@ namespace ProxySwarm.Domain.Miscellaneous
     public class Counter
     {
         private readonly object locker = new object();
+        private readonly RecentBuffer<int> buffer = new RecentBuffer<int>();
         private int count;
-
-        public Counter()
-        {
-            this.Notifier = new RecentBuffer<int>();
-        }
 
         internal void Increment()
         {
             lock (locker)
-                Notifier.Post(++count);
+                this.buffer.Post(++count);
         }
 
         internal void Decrement()
         {
             lock (locker)
-                Notifier.Post(--count);
+                this.buffer.Post(--count);
         }
 
         public int Count { get { return this.count; } }
 
-        public RecentBuffer<int> Notifier { get; private set; }
+        public async Task<int> ReceiveAsync(CancellationToken token = default(CancellationToken))
+        {
+            return await this.buffer.ReceiveAsync(token);
+        }
     }
 }
