@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="Miscellaneous\Counter.cs" />
     <Compile Include="Miscellaneous\RecentBuffer.cs" />
     <Compile Include="ProxyFactory\DefaultProxyFactory.cs" />

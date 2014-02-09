@@ -35,14 +35,14 @@ namespace ProxySwarm.Domain.Miscellaneous
             {
                 var cancellationTcs = new TaskCompletionSource<bool>();
                 using (token.Register(() => cancellationTcs.SetCanceled(), useSynchronizationContext: false))
-                    await Task.WhenAny(task, cancellationTcs.Task).ConfigureAwait(false);
+                    await Task.WhenAny(task, cancellationTcs.Task);
 
                 token.ThrowIfCancellationRequested();
             }
 
             try
             {
-                return await task.ConfigureAwait(false);
+                return await task;
             }
             finally
             {

@@ -29,11 +29,14 @@ namespace ProxySwarm.Domain
 
             using (var sr = new StreamReader(path))
             {
-                content = await sr.ReadToEndAsync().ConfigureAwait(false);
+                content = await sr.ReadToEndAsync();
             }
 
             foreach (var proxy in proxyFactory.RetrieveProxies(content))
+            {
                 buffer.Post(proxy);
+            }
+
         }
 
         public IDisposable Subscribe(IObserver<Proxy> observer)
