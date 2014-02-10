@@ -27,43 +27,6 @@ namespace ProxySwarm.Domain
             this.isRunningTask = this.isRunningCompletionSource.Task;
         }
 
-        //private async Task WorkerMethod()
-        //{
-        //    Task<Proxy> proxyTask;
-        //    await this.isRunningTask;
-        //    proxyTask = this.proxyBag.ReceiveAsync(CancellationToken.None);
-        //    //fix this -> it's decrementing proxy count but not starting
-        //    await proxyTask;
-        //    await this.isRunningTask;
-        //    this.Status.ConnectionCounter.Increment();
-
-        //    while (true)
-        //    {
-        //        var success = await this.proxyWorkerFactory.CreateWorkerAsync(proxyTask.Result);
-        //        if (success)
-        //            this.Status.SuccessCounter.Increment();
-        //        else
-        //            this.Status.FailCounter.Increment();
-
-        //        if (!this.isRunningTask.IsCompleted)
-        //        {
-        //            this.Status.ConnectionCounter.Decrement();
-        //            await this.isRunningTask;
-        //            this.Status.ConnectionCounter.Increment();
-        //        }
-
-        //        proxyTask = this.proxyBag.ReceiveAsync(CancellationToken.None);
-        //        if (!proxyTask.IsCompleted)
-        //        {
-        //            this.Status.ConnectionCounter.Decrement();
-        //            await proxyTask;
-        //            this.Status.ConnectionCounter.Increment();
-        //        }
-        //    }
-
-        //    this.Status.ConnectionCounter.Decrement();
-        //}
-
         private async Task WorkerMethod(Proxy proxy)
         {
             this.Status.ConnectionCounter.Increment();
