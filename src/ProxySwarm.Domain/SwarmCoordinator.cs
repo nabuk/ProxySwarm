@@ -87,13 +87,6 @@ namespace ProxySwarm.Domain
             if (this.tasks == null)
             {
                 this.tasks = new Task[this.maxWorkerCount];
-                
-                //Task.Factory.StartNew(() =>
-                //    {
-                //        for (var i = 0; i < this.maxWorkerCount; ++i)
-                //            this.tasks[i] = Task.Factory.StartNew(async () => await WorkerMethod(), CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-                //    }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-
 
                 Task.Factory.StartNew(async () =>
                 {
@@ -109,11 +102,6 @@ namespace ProxySwarm.Domain
                                 finally { throttler.Release(); }
                             });
                         }
-                    
-                    //for (var i = 0; i < this.maxWorkerCount; ++i)
-                    //{
-                    //    this.tasks[i] = factory.StartNew(async () => await WorkerMethod());
-                    //}
 
                 }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
             }
