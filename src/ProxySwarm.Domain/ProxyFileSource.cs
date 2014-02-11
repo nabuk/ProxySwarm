@@ -36,7 +36,6 @@ namespace ProxySwarm.Domain
             {
                 buffer.Post(proxy);
             }
-
         }
 
         public IDisposable Subscribe(IObserver<Proxy> observer)

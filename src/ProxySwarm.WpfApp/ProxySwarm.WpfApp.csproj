@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Concrete\TestProxyWorkerFactory.cs" />
     <Compile Include="Core\CounterBindAggregate.cs" />
     <Compile Include="Core\CounterToPropertyBinder.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
@@ -139,6 +140,7 @@
       <Name>ProxySwarm.Domain</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,7 @@
-﻿using ProxySwarm.WpfApp.Core;
+﻿using ProxySwarm.Domain;
+using ProxySwarm.Domain.ProxyFactory;
+using ProxySwarm.WpfApp.Concrete;
+using ProxySwarm.WpfApp.Core;
 using ProxySwarm.WpfApp.ViewModels;
 using System.Windows;
 
@@ -13,7 +16,14 @@ namespace ProxySwarm.WpfApp
         {
             InitializeComponent();
 
-            this.DataContext = new MainViewModel(new UIInvoker(this.Dispatcher));
+            var maxConnectionCount = 50;
+            System.Net.ServicePointManager.Expect100Continue = false;
+            System.Net.ServicePointManager.DefaultConnectionLimit = maxConnectionCount;
+            
+            var proxyFileSource = new ProxyFileSource(new DefaultProxyFactory());
+            var swarmCoordinator = new SwarmCoordinator(new TestProxyWorkerFactory(), proxyFileSource, maxConnectionCount);
+
+            this.DataContext = new MainViewModel(swarmCoordinator, proxyFileSource, new UIInvoker(this.Dispatcher));
         }
     }
 }
