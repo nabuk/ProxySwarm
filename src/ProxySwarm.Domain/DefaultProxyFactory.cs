@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ProxySwarm.Domain.ProxyFactory
+namespace ProxySwarm.Domain
 {
     public class DefaultProxyFactory : IProxyFactory
     {

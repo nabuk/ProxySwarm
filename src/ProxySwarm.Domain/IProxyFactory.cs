@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProxySwarm.Domain.ProxyFactory
+namespace ProxySwarm.Domain
 {
     public interface IProxyFactory
     {

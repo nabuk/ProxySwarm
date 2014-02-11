@@ -1,5 +1,4 @@
 ﻿using ProxySwarm.Domain;
-using ProxySwarm.Domain.ProxyFactory;
 using ProxySwarm.WpfApp.Concrete;
 using ProxySwarm.WpfApp.Core;
 using ProxySwarm.WpfApp.ViewModels;

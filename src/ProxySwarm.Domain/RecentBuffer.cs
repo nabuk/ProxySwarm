@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProxySwarm.Domain.Miscellaneous
+namespace ProxySwarm.Domain
 {
     public class RecentBuffer<T>
     {
