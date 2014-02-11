@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProxySwarm.WpfApp.ViewModels
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel
     {
         protected readonly IUIInvoker uiInvoker;
 
@@ -20,13 +20,5 @@ namespace ProxySwarm.WpfApp.ViewModels
 
             this.uiInvoker = uiInvoker;
         }
-
-        protected void RaisePropertyChanged([CallerMemberName] string callerMemberName = null)
-        {
-            //this.uiInvoker.InvokeOnUIThreadAsync(() => this.PropertyChanged(this, new PropertyChangedEventArgs(callerMemberName)));
-            this.PropertyChanged(this, new PropertyChangedEventArgs(callerMemberName));
-        }
-        
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
     }
 }

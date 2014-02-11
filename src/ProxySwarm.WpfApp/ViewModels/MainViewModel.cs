@@ -1,4 +1,5 @@
-﻿using ProxySwarm.Domain;
+﻿using PropertyChanged;
+using ProxySwarm.Domain;
 using ProxySwarm.WpfApp.Core;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,15 +7,12 @@ using System.Windows.Input;
 
 namespace ProxySwarm.WpfApp.ViewModels
 {
+    [ImplementPropertyChanged]
     public class MainViewModel : BaseViewModel
     {
-        private int successCount;
-        private int failCount;
-        private int connectionCount;
-        private int proxyCount;
-
         private readonly SwarmCoordinator swarmCoordinator;
         private readonly ProxyFileSource proxyFileSource;
+        private readonly ICounterBind counterBinds;
 
         private bool isPlaying;
 
@@ -35,21 +33,11 @@ namespace ProxySwarm.WpfApp.ViewModels
 
         private async Task UpdateUIAsync()
         {
-            var status = this.swarmCoordinator.Status;
-            ICounterBind counterBinds = new CounterBindAggregate(
-                new[]
-                        {
-                            new CounterBind(x => this.SuccessCount = x, status.SuccessCounter),
-                            new CounterBind(x => this.FailCount = x, status.FailCounter),
-                            new CounterBind(x => this.ConnectionCount = x, status.ConnectionCounter),
-                            new CounterBind(x => this.ProxyCount = x, status.ProxyCounter)
-                        });
-
             while (true)
             {
                 await Task.WhenAll(this.uiInvoker.YieldBackgroundPriority(), Task.Delay(500));
-                await counterBinds.ReceiveAsync();
-                counterBinds.UpdateAndFlushIfReceived();
+                await this.counterBinds.ReceiveAsync();
+                this.counterBinds.UpdateAndFlushIfReceived();
             }
         }
 
@@ -61,59 +49,25 @@ namespace ProxySwarm.WpfApp.ViewModels
             this.swarmCoordinator = swarmCoordinator;
             this.proxyFileSource = proxyFileSource;
 
+            var status = this.swarmCoordinator.Status;
+            this.counterBinds = new CounterBindAggregate(
+                new[]
+                        {
+                            new CounterBind(x => this.SuccessCount = x, status.SuccessCounter),
+                            new CounterBind(x => this.FailCount = x, status.FailCounter),
+                            new CounterBind(x => this.ConnectionCount = x, status.ConnectionCounter),
+                            new CounterBind(x => this.ProxyCount = x, status.ProxyCounter)
+                        });
+
             this.uiInvoker.InvokeOnUIThreadAsync(async () => await this.UpdateUIAsync());
         }
 
         public ICommand PlayPauseCommand { get; private set; }
         public ICommand FilesPickedCommand { get; private set; }
 
-        public int SuccessCount
-        {
-            get
-            {
-                return this.successCount;
-            }
-            set
-            {
-                this.successCount = value;
-                RaisePropertyChanged();
-            }
-        }
-        public int FailCount
-        {
-            get
-            {
-                return this.failCount;
-            }
-            set
-            {
-                this.failCount = value;
-                RaisePropertyChanged();
-            }
-        }
-        public int ConnectionCount
-        {
-            get
-            {
-                return this.connectionCount;
-            }
-            set
-            {
-                this.connectionCount = value;
-                RaisePropertyChanged();
-            }
-        }
-        public int ProxyCount
-        {
-            get
-            {
-                return this.proxyCount;
-            }
-            set
-            {
-                this.proxyCount = value;
-                RaisePropertyChanged();
-            }
-        }
+        public int SuccessCount { get; private set; }
+        public int FailCount { get; private set; }
+        public int ConnectionCount { get; private set; }
+        public int ProxyCount { get; private set; }
     }
 }
