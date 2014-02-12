@@ -35,7 +35,7 @@ namespace ProxySwarm.WpfApp.ViewModels
         {
             while (true)
             {
-                await Task.WhenAll(this.uiInvoker.YieldBackgroundPriority(), Task.Delay(500));
+                await Task.WhenAll(this.uiInvoker.YieldBackgroundPriority(), Task.Delay(50));
                 await this.counterBinds.ReceiveAsync();
                 this.counterBinds.UpdateAndFlushIfReceived();
             }
