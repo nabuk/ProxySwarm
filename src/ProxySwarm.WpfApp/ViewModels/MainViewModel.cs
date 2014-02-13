@@ -25,6 +25,7 @@ namespace ProxySwarm.WpfApp.ViewModels
 
             this.isPlaying = !this.isPlaying;
         }
+
         private void FilesPickedHandler(string[] fileNames)
         {
             foreach (var file in fileNames)
