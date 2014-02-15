@@ -1,6 +1,7 @@
 ﻿using ProxySwarm.Domain;
 using ProxySwarm.WpfApp.Concrete;
 using ProxySwarm.WpfApp.Core;
+using ProxySwarm.WpfApp.Properties;
 using ProxySwarm.WpfApp.ViewModels;
 using System.Windows;
 
@@ -15,7 +16,7 @@ namespace ProxySwarm.WpfApp
         {
             InitializeComponent();
 
-            var maxConnectionCount = 150;
+            var maxConnectionCount = Settings.Default.MaxConnectionCount;
             System.Net.ServicePointManager.Expect100Continue = false;
             System.Net.ServicePointManager.DefaultConnectionLimit = maxConnectionCount;
             
