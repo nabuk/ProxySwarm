@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Cache;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace ProxySwarm.WpfApp.Concrete
             request.ProtocolVersion = HttpVersion.Version11;
             request.KeepAlive = false;
             request.Proxy = new System.Net.WebProxy(proxy.Address, proxy.Port);
+            request.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
 
             var cts = new CancellationTokenSource();
             var cancellationToken = cts.Token;
