@@ -13,7 +13,7 @@ namespace ProxySwarm.WpfApp.Concrete
     {
         public async Task<bool> CreateWorkerAsync(Proxy proxy)
         {
-            var request = System.Net.WebRequest.CreateHttp("http://www.google.com");
+            var request = System.Net.WebRequest.CreateHttp("http://www.microsoft.com");
             request.Method = "GET";
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0";
             request.Timeout = 20000;
@@ -34,7 +34,7 @@ namespace ProxySwarm.WpfApp.Concrete
             using (cancellationToken.Register(() => cancellationTcs.SetCanceled(), useSynchronizationContext: false))
             using (var ms = new System.IO.MemoryStream())
             {
-                WebResponse response = null;
+                HttpWebResponse response = null;
                 try
                 {
                     var webResponseTask = request.GetResponseAsync();
@@ -54,11 +54,15 @@ namespace ProxySwarm.WpfApp.Concrete
                         return false;
                     }
 
-                    using (response = webResponseTask.Result)
+                    using (response = (HttpWebResponse)webResponseTask.Result)
                     using (var responseStream = response.GetResponseStream())
                     {
                         if (responseStream == null)
                             throw new System.Data.NoNullAllowedException("Response stream cannot be null.");
+
+                        var statusCode = (int)response.StatusCode;
+                        if (statusCode >= 300 && statusCode <= 399)
+                            return false;
 
                         var copyTask = responseStream.CopyToAsync(ms, 1024 * 64, cancellationToken);
                         await Task.WhenAny(copyTask, cancellationTcs.Task);
