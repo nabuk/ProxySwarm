@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ProxySwarm.Internal.Domain
+namespace ProxySwarm.Domain.Logic
 {
     internal class DefaultProxyFactory : IProxyFactory
     {

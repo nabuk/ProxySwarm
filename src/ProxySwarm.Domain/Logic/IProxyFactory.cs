@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProxySwarm.Internal.Domain
+namespace ProxySwarm.Domain.Logic
 {
     internal interface IProxyFactory
     {

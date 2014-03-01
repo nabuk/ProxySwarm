@@ -1,7 +1,9 @@
 ﻿using System;
 
-namespace ProxySwarm.Domain
+namespace ProxySwarm.Domain.Isolation
 {
+    //http://www.superstarcoders.com/blogs/posts/executing-code-in-a-separate-application-domain-using-c-sharp.aspx
+
     public sealed class Isolated<T> : IDisposable where T : MarshalByRefObject
     {
         private AppDomain _domain;

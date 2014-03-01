@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProxySwarm.Internal.Domain
+namespace ProxySwarm.Domain.Logic
 {
     internal class SwarmCoordinator : IDisposable
     {

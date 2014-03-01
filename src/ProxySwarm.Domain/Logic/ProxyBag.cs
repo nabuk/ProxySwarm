@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace ProxySwarm.Internal.Domain
+namespace ProxySwarm.Domain.Logic
 {
     internal class ProxyBag : IObserver<Proxy>, IDisposable
     {
