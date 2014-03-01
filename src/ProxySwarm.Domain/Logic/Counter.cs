@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProxySwarm.Domain
+namespace ProxySwarm.Domain.Logic
 {
-    public class Counter
+    internal class Counter
     {
         private readonly object locker = new object();
         private readonly RecentBuffer<int> buffer = new RecentBuffer<int>();
@@ -25,9 +25,9 @@ namespace ProxySwarm.Domain
                 this.buffer.Post(--count);
         }
 
-        public int Count { get { return this.count; } }
+        internal int Count { get { return this.count; } }
 
-        public async Task<int> ReceiveAsync(CancellationToken token = default(CancellationToken))
+        internal async Task<int> ReceiveAsync(CancellationToken token = default(CancellationToken))
         {
             return await this.buffer.ReceiveAsync(token);
         }

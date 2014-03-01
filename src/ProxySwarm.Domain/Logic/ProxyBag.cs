@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProxySwarm.Domain;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,21 +8,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace ProxySwarm.Domain
+namespace ProxySwarm.Domain.Logic
 {
-    public class ProxyBag : IObserver<Proxy>, IDisposable
+    internal class ProxyBag : IObserver<Proxy>, IDisposable
     {
         private readonly ConcurrentDictionary<Proxy, byte> dictionary = new ConcurrentDictionary<Proxy, byte>();
         private readonly BufferBlock<Proxy> buffer = new BufferBlock<Proxy>();
         private readonly IDisposable disposableSubscription;
 
-        public ProxyBag(IObservable<Proxy> proxySource)
+        internal ProxyBag(IObservable<Proxy> proxySource)
         {
             this.disposableSubscription = proxySource.Subscribe(this);
             this.Counter = new Counter();
         }
 
-        public async Task<Proxy> ReceiveAsync(CancellationToken cancellationToken)
+        internal async Task<Proxy> ReceiveAsync(CancellationToken cancellationToken)
         {
             var result = await this.buffer.ReceiveAsync(cancellationToken);
 
@@ -29,7 +30,7 @@ namespace ProxySwarm.Domain
             return result;
         }
 
-        public Counter Counter { get; private set; }
+        internal Counter Counter { get; private set; }
 
         #region IDisposable
         public void Dispose()

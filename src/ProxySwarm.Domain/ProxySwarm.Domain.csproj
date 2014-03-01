@@ -45,17 +45,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Counter.cs" />
-    <Compile Include="RecentBuffer.cs" />
-    <Compile Include="DefaultProxyFactory.cs" />
-    <Compile Include="IProxyFactory.cs" />
+    <Compile Include="Coordinator.cs" />
+    <Compile Include="CoordinatorCreateOptions.cs" />
+    <Compile Include="Isolation\CounterChangeInfo.cs" />
+    <Compile Include="Isolation\IsolatedCounter.cs" />
+    <Compile Include="Isolation\IsolatedSwarmCoordinator.cs" />
+    <Compile Include="Isolation\MarshaledResultSetter.cs" />
+    <Compile Include="Logic\Counter.cs" />
+    <Compile Include="Isolation\Isolated.cs" />
+    <Compile Include="Logic\RecentBuffer.cs" />
+    <Compile Include="Logic\DefaultProxyFactory.cs" />
+    <Compile Include="Logic\IProxyFactory.cs" />
     <Compile Include="IProxyWorkerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
-    <Compile Include="ProxyBag.cs" />
-    <Compile Include="ProxyFileSource.cs" />
-    <Compile Include="SwarmCoordinator.cs" />
-    <Compile Include="SwarmCoordinatorStatus.cs" />
+    <Compile Include="Logic\ProxyBag.cs" />
+    <Compile Include="Logic\ProxyFileSource.cs" />
+    <Compile Include="Logic\SwarmCoordinator.cs" />
+    <Compile Include="Logic\SwarmCoordinatorStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

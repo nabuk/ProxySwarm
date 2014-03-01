@@ -1,13 +1,14 @@
-﻿using System;
+﻿using ProxySwarm.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ProxySwarm.Domain
+namespace ProxySwarm.Domain.Logic
 {
-    public class DefaultProxyFactory : IProxyFactory
+    internal class DefaultProxyFactory : IProxyFactory
     {
-        public IList<Proxy> RetrieveProxies(string content)
+        IList<Proxy> IProxyFactory.RetrieveProxies(string content)
         {
             return Regex.Matches(content, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5}")
                 .OfType<Match>()

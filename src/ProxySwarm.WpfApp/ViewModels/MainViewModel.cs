@@ -1,6 +1,11 @@
 ﻿using PropertyChanged;
 using ProxySwarm.Domain;
+using ProxySwarm.Domain.Isolation;
+using ProxySwarm.WpfApp.Concrete;
 using ProxySwarm.WpfApp.Core;
+using ProxySwarm.WpfApp.Properties;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -10,56 +15,55 @@ namespace ProxySwarm.WpfApp.ViewModels
     [ImplementPropertyChanged]
     public class MainViewModel : BaseViewModel
     {
-        private readonly SwarmCoordinator swarmCoordinator;
-        private readonly ProxyFileSource proxyFileSource;
-        private readonly ICounterBind counterBinds;
-
+        private readonly Coordinator coordinator;
+        private readonly Dictionary<string, Action<int>> counterUpdateMap;
         private bool isPlaying;
 
         private void PlayPauseHandler()
         {
             if (this.isPlaying)
-                this.swarmCoordinator.Pause();
+                this.coordinator.Pause();
             else
-                this.swarmCoordinator.Start();
+                this.coordinator.Start();
 
             this.isPlaying = !this.isPlaying;
         }
 
         private void FilesPickedHandler(string[] fileNames)
         {
-            foreach (var file in fileNames)
-                this.proxyFileSource.ReadProxiesFromFileAsync(file, CancellationToken.None);
+            this.coordinator.ReadProxiesFromFiles(fileNames);
         }
 
         private async Task UpdateUIAsync()
         {
             while (true)
             {
-                await Task.WhenAll(this.uiInvoker.YieldBackgroundPriority(), Task.Delay(50));
-                await this.counterBinds.ReceiveAsync();
-                this.counterBinds.UpdateAndFlushIfReceived();
+                var counterChangeTask = this.coordinator.GetCounterChangeAsync();
+                await Task.WhenAll(this.uiInvoker.YieldBackgroundPriority(), Task.Delay(50), counterChangeTask);
+
+                foreach (var change in counterChangeTask.Result.NewValues)
+                    this.counterUpdateMap[change.Key](change.Value);
             }
         }
 
-        public MainViewModel(SwarmCoordinator swarmCoordinator, ProxyFileSource proxyFileSource, IUIInvoker uiInvoker)
+        public MainViewModel(IUIInvoker uiInvoker, int maxConnectionCount)
             : base(uiInvoker)
         {
             this.PlayPauseCommand = new DelegateCommand(this.PlayPauseHandler);
             this.FilesPickedCommand = new DelegateCommand<string[]>(this.FilesPickedHandler);
-            this.swarmCoordinator = swarmCoordinator;
-            this.proxyFileSource = proxyFileSource;
-
-            var status = this.swarmCoordinator.Status;
-            this.counterBinds = new CounterBindAggregate(
-                new[]
-                        {
-                            new CounterBind(x => this.SuccessCount = x, status.SuccessCounter),
-                            new CounterBind(x => this.FailCount = x, status.FailCounter),
-                            new CounterBind(x => this.ConnectionCount = x, status.ConnectionCounter),
-                            new CounterBind(x => this.ProxyCount = x, status.ProxyCounter)
-                        });
-
+            this.counterUpdateMap = new Dictionary<string, Action<int>>
+            {
+                { CounterChangeInfo.SuccessesKey, x => this.SuccessCount = x },
+                { CounterChangeInfo.FailsKey, x => this.FailCount = x },
+                { CounterChangeInfo.ConnectionsKey, x => this.ConnectionCount = x },
+                { CounterChangeInfo.ProxiesKey, x => this.ProxyCount = x }
+            };
+            this.coordinator = new Coordinator(
+                new CoordinatorCreateOptions
+                {
+                    MaxWorkerCount = maxConnectionCount,
+                    ProxyWorkerFactoryType = typeof(TestProxyWorkerFactory)
+                });
             this.uiInvoker.InvokeOnUIThreadAsync(async () => await this.UpdateUIAsync());
         }
 

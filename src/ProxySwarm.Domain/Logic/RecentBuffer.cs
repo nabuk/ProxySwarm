@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProxySwarm.Domain
+namespace ProxySwarm.Domain.Logic
 {
-    public class RecentBuffer<T>
+    internal class RecentBuffer<T>
     {
         private readonly object locker = new object();
         private volatile TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
@@ -24,7 +24,7 @@ namespace ProxySwarm.Domain
             tempTcs.SetResult(data);
         }
 
-        public async Task<T> ReceiveAsync(CancellationToken token = default(CancellationToken))
+        internal async Task<T> ReceiveAsync(CancellationToken token = default(CancellationToken))
         {
             Task<T> task = null;
 
