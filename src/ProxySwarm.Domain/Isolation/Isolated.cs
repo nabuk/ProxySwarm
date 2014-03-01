@@ -25,6 +25,7 @@ namespace ProxySwarm.Domain.Isolation
             }
         }
 
+        #region IDisposable
         public void Dispose()
         {
             if (this.domain != null)
@@ -33,5 +34,6 @@ namespace ProxySwarm.Domain.Isolation
                 this.domain = null;
             }
         }
+        #endregion //IDisposable
     }
 }

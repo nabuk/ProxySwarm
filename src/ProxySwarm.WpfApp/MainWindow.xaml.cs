@@ -16,11 +16,7 @@ namespace ProxySwarm.WpfApp
         {
             InitializeComponent();
 
-            var maxConnectionCount = Settings.Default.MaxConnectionCount;
-            System.Net.ServicePointManager.Expect100Continue = false;
-            System.Net.ServicePointManager.DefaultConnectionLimit = maxConnectionCount;
-            
-            this.DataContext = new MainViewModel(new UIInvoker(this.Dispatcher));
+            this.DataContext = new MainViewModel(new UIInvoker(this.Dispatcher), Settings.Default.MaxConnectionCount);
         }
     }
 }

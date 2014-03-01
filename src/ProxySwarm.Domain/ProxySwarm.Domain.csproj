@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinator.cs" />
+    <Compile Include="CoordinatorCreateOptions.cs" />
+    <Compile Include="Isolation\CounterChangeInfo.cs" />
+    <Compile Include="Isolation\IsolatedCounter.cs" />
+    <Compile Include="Isolation\IsolatedSwarmCoordinator.cs" />
+    <Compile Include="Isolation\MarshaledResultSetter.cs" />
     <Compile Include="Logic\Counter.cs" />
     <Compile Include="Isolation\Isolated.cs" />
     <Compile Include="Logic\RecentBuffer.cs" />
