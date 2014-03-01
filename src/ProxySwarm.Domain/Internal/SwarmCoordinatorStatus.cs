@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProxySwarm.Domain
+namespace ProxySwarm.Internal.Domain
 {
-    public class SwarmCoordinatorStatus
+    internal class SwarmCoordinatorStatus
     {
-        public SwarmCoordinatorStatus()
+        internal SwarmCoordinatorStatus()
         {
             this.SuccessCounter = new Counter();
             this.FailCounter = new Counter();
@@ -16,9 +16,9 @@ namespace ProxySwarm.Domain
             this.ProxyCounter = new Counter();
         }
 
-        public Counter SuccessCounter { get; internal set; }
-        public Counter FailCounter { get; internal set; }
-        public Counter ConnectionCounter { get; internal set; }
-        public Counter ProxyCounter { get; internal set; }
+        internal Counter SuccessCounter { get; set; }
+        internal Counter FailCounter { get; set; }
+        internal Counter ConnectionCounter { get; set; }
+        internal Counter ProxyCounter { get; set; }
     }
 }

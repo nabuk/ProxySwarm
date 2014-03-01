@@ -20,7 +20,7 @@ namespace ProxySwarm.WpfApp.Concrete
                         AllowAutoRedirect = false,
                         UseCookies = true,
                         CookieContainer = new CookieContainer(),
-                        Proxy = new WebProxy(proxy.Address, proxy.Port),
+                        Proxy = new WebProxy(proxy.Host, proxy.Port),
                         UseProxy = true
                     }
                     , true)

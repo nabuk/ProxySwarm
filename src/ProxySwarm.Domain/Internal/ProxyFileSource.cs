@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProxySwarm.Domain;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,22 +8,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace ProxySwarm.Domain
+namespace ProxySwarm.Internal.Domain
 {
-    public class ProxyFileSource : IObservable<Proxy>
+    internal class ProxyFileSource : IObservable<Proxy>
     {
         private readonly BufferBlock<Proxy> buffer = new BufferBlock<Proxy>();
         private readonly IObservable<Proxy> observableBuffer;
         private readonly IProxyFactory proxyFactory;
-        private const int DefaultBufferSize = 81920;
 
-        public ProxyFileSource(IProxyFactory proxyFactory)
+        internal ProxyFileSource(IProxyFactory proxyFactory)
         {
             this.proxyFactory = proxyFactory;
             this.observableBuffer = this.buffer.AsObservable();
         }
 
-        public async Task ReadProxiesFromFileAsync(string path, CancellationToken cancellationToken)
+        internal async Task ReadProxiesFromFileAsync(string path, CancellationToken cancellationToken)
         {
             string content;
 
@@ -37,7 +37,7 @@ namespace ProxySwarm.Domain
             }
         }
 
-        public IDisposable Subscribe(IObserver<Proxy> observer)
+        IDisposable IObservable<Proxy>.Subscribe(IObserver<Proxy> observer)
         {
             return this.observableBuffer.Subscribe(observer);
         }

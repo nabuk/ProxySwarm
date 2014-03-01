@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ProxySwarm.Domain;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
- 
-namespace ProxySwarm.Domain
+
+namespace ProxySwarm.Internal.Domain
 {
-    public class SwarmCoordinator : IDisposable
+    internal class SwarmCoordinator : IDisposable
     {
         private readonly IProxyWorkerFactory proxyWorkerFactory;
         private readonly int maxWorkerCount;
@@ -14,8 +15,8 @@ namespace ProxySwarm.Domain
         private Task isRunningTask;
         private CancellationTokenSource disposeCancellationSource = new CancellationTokenSource();
         private Task throttlerTask;
- 
-        public SwarmCoordinator(IProxyWorkerFactory proxyWorkerFactory, IObservable<Proxy> proxySource, int maxWorkerCount)
+
+        internal SwarmCoordinator(IProxyWorkerFactory proxyWorkerFactory, IObservable<Proxy> proxySource, int maxWorkerCount)
         {
             this.proxyWorkerFactory = proxyWorkerFactory;
             this.maxWorkerCount = maxWorkerCount;
@@ -55,7 +56,7 @@ namespace ProxySwarm.Domain
                 }
         }
 
-        public void Start()
+        internal void Start()
         {
             if (this.isRunningTask.IsCompleted)
                 return;
@@ -65,8 +66,8 @@ namespace ProxySwarm.Domain
             if (this.throttlerTask == null)
                 this.throttlerTask = Task.Factory.StartNew(async () => await this.ThrottlerMethod(this.disposeCancellationSource.Token), TaskCreationOptions.LongRunning);
         }
- 
-        public void Pause()
+
+        internal void Pause()
         {
             if (!this.isRunningTask.IsCompleted)
                 return;
@@ -74,8 +75,8 @@ namespace ProxySwarm.Domain
             this.isRunningCompletionSource = new TaskCompletionSource<bool>();
             this.isRunningTask = this.isRunningCompletionSource.Task;
         }
- 
-        public SwarmCoordinatorStatus Status { get; private set; }
+
+        internal SwarmCoordinatorStatus Status { get; private set; }
  
         #region IDisposable
         public void Dispose()

@@ -2,22 +2,24 @@
 
 namespace ProxySwarm.Domain
 {
-    public class Proxy : IEquatable<Proxy>
+    public sealed class Proxy : IEquatable<Proxy>
     {
-        public Proxy(string address, int port)
+        public Proxy(string host, int port)
         {
-            if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("address cannot be null or whitespace.");
+            if (string.IsNullOrWhiteSpace(host)) throw new ArgumentException("host cannot be null or whitespace.");
 
-            this.Address = address;
+            this.Host = host;
             this.Port = port;
         }
 
-        public string Address { get; private set; }
+        public string Host { get; private set; }
+
         public int Port { get; private set; }
 
+        #region Overrides
         public override string ToString()
         {
-            return string.Format("{0} : {1}", Address ?? "NULL address", Port);
+            return string.Format("{0} : {1}", Host, Port);
         }
 
         public override bool Equals(object obj)
@@ -27,15 +29,18 @@ namespace ProxySwarm.Domain
 
         public override int GetHashCode()
         {
-            return Address.GetHashCode();
+            return Host.GetHashCode();
         }
+        #endregion //Overrides
 
+        #region IEquatable<Proxy>
         public bool Equals(Proxy other)
         {
             if (other == null)
                 return false;
 
-            return Address == other.Address && Port == other.Port;
+            return Host == other.Host && Port == other.Port;
         }
+        #endregion //IEquatable<Proxy>
     }
 }

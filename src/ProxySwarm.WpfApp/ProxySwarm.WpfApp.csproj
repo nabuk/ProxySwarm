@@ -65,10 +65,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Concrete\TestProxyWorkerFactory.cs" />
-    <Compile Include="Core\CounterBindAggregate.cs" />
-    <Compile Include="Core\CounterBind.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
-    <Compile Include="Core\ICounterBind.cs" />
     <Compile Include="Core\IUIInvoker.cs" />
     <Compile Include="Core\UIInvoker.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
