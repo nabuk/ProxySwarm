@@ -25,7 +25,7 @@ is responsible for creating tasks.
 
 The factory class implements **IProxyWorkerFactory** interface, which obliges it to implement a method of the following signature:  
   
-		Task<bool> CreateWorkerAsync(Proxy proxy);
+	Task<bool> CreateWorkerAsync(Proxy proxy);
 
 In the mentioned class you can see an example, that downloads the content of Microsoft website and returns true, if the operation was successful.
 
