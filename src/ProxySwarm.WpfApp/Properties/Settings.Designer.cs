@@ -25,7 +25,7 @@ namespace ProxySwarm.WpfApp.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
         public int MaxConnectionCount {
             get {
                 return ((int)(this["MaxConnectionCount"]));
