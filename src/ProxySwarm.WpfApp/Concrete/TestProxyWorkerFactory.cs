@@ -33,17 +33,19 @@ namespace ProxySwarm.WpfApp.Concrete
 
                 using (httpClient)
                 {
-                    var response = await httpClient.GetAsync("http://www.microsoft.com/en-US/default.aspx", HttpCompletionOption.ResponseContentRead);
-                    using (response)
+                    var httpResponse = await httpClient.GetAsync("http://www.microsoft.com/en-US/default.aspx", HttpCompletionOption.ResponseContentRead);
+                    using (httpResponse)
                     {
-                        if (!response.IsSuccessStatusCode)
+                        if (!httpResponse.IsSuccessStatusCode)
                             return false;
 
-                        using (var content = response.Content)
+                        using (var httpContent = httpResponse.Content)
                         {
-                            //var strContent = await content.ReadAsStringAsync();
-                            //strContent.ToString();
+                            var content = await httpContent.ReadAsStringAsync();
+                            
+                            //Do something with content here
                         }
+
                         return true;
                     }
                 }
