@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Concrete\TestProxyWorkerFactory.cs" />
     <Compile Include="Core\DelegateCommand.cs" />
     <Compile Include="Core\IUIInvoker.cs" />

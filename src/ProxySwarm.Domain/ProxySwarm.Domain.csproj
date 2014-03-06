@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Coordinator.cs" />
     <Compile Include="CoordinatorCreateOptions.cs" />
     <Compile Include="Isolation\CounterChangeInfo.cs" />
