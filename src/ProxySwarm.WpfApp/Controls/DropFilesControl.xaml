@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="ProxySwarm.WpfApp.Controls.DropFilesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:ProxySwarm.WpfApp.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="100"
+             AllowDrop="True"
+             >
+    <StackPanel Margin="10" VerticalAlignment="Center">
+        <Border x:Name="ArrowBorder" Padding="10" Background="Transparent"
+            BorderThickness="3" BorderBrush="{StaticResource InactiveColorBrush}" CornerRadius="4"
+            MaxHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+            Drop="DropFilesControl_Drop">
+            <Image>
+                <Image.Source>
+                    <DrawingImage>
+                        <DrawingImage.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <GeometryGroup>
+                                        <PathGeometry Figures="
+                                        M-10,0
+                                        10,0
+                                        10,20
+                                        20,20
+                                        0,40
+                                        -20,20
+                                        -10,20 Z">
+                                        </PathGeometry>
+                                    </GeometryGroup>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Thickness="3" LineJoin="Round">
+                                        <Pen.Brush>
+                                            <SolidColorBrush x:Name="ArrowBrush" Color="{StaticResource InactiveColor}"  />
+                                        </Pen.Brush>
+                                    </Pen>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingImage.Drawing>
+                    </DrawingImage>
+                </Image.Source>
+                <Image.RenderTransform>
+                    <TranslateTransform x:Name="ArrowTranslateTransform" />
+                </Image.RenderTransform>
+            </Image>
+        </Border>
+        <TextBlock Margin="0, 10, 0, 0"
+            TextWrapping="Wrap" TextAlignment="Center"
+            Foreground="{StaticResource InactiveFontColorBrush}">
+            Drag &amp; drop files or
+            <Hyperlink Click="BrowseFilesLink_Click" Foreground="{StaticResource ActiveColorBrush}">browse</Hyperlink>
+        </TextBlock>
+    </StackPanel>
+    <UserControl.Resources>
+        <Storyboard x:Key="LightenArrowAnimation">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="ArrowBrush" Storyboard.TargetProperty="Color">
+                <DiscreteColorKeyFrame Value="{StaticResource ActiveColor}" KeyTime="0" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DarkenArrowAnimation">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="ArrowBrush" Storyboard.TargetProperty="Color">
+                <DiscreteColorKeyFrame Value="{StaticResource InactiveColor}" KeyTime="0" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="LightenArrowBorderAnimation">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="ArrowBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                <DiscreteColorKeyFrame Value="{StaticResource ActiveColor}" KeyTime="0" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DarkenArrowBorderAnimation">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="ArrowBorder" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                <DiscreteColorKeyFrame Value="{StaticResource InactiveColor}" KeyTime="0" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="ShakeArrowAnimation" >
+            <DoubleAnimation Storyboard.TargetName="ArrowTranslateTransform" Storyboard.TargetProperty="Y"
+                To="10" Duration="0:0:0.1">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="ArrowTranslateTransform" Storyboard.TargetProperty="Y"
+                To="0" Duration="0:0:0.3" BeginTime="0:0:0.15" />
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger SourceName="ArrowBorder" RoutedEvent="DragEnter">
+            <BeginStoryboard Storyboard="{StaticResource LightenArrowAnimation}" />
+            <BeginStoryboard Storyboard="{StaticResource LightenArrowBorderAnimation}" />
+        </EventTrigger>
+        <EventTrigger SourceName="ArrowBorder" RoutedEvent="DragLeave">
+            <BeginStoryboard Storyboard="{StaticResource DarkenArrowAnimation}" />
+            <BeginStoryboard Storyboard="{StaticResource DarkenArrowBorderAnimation}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="{x:Static uc:DropFilesControl.FilesPickedEvent}">
+            <BeginStoryboard Storyboard="{StaticResource ShakeArrowAnimation}" />
+            <BeginStoryboard Storyboard="{StaticResource DarkenArrowAnimation}" />
+            <BeginStoryboard Storyboard="{StaticResource DarkenArrowBorderAnimation}" />
+        </EventTrigger>
+    </UserControl.Triggers>
+</UserControl>

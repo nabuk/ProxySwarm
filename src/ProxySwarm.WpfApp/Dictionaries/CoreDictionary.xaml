@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="InactiveColor">#888</Color>
+    <Color x:Key="ActiveColor">#88F</Color>
+    <Color x:Key="InactiveFontColor">#888</Color>
+    <Color x:Key="ActiveFontColor">#EEE</Color>
+
+    <SolidColorBrush x:Key="InactiveColorBrush" Color="{StaticResource InactiveColor}" />
+    <SolidColorBrush x:Key="ActiveColorBrush" Color="{StaticResource ActiveColor}" />
+    <SolidColorBrush x:Key="InactiveFontColorBrush" Color="{StaticResource InactiveFontColor}" />
+    <SolidColorBrush x:Key="ActiveFontColorBrush" Color="{StaticResource ActiveFontColor}" />
+    
+</ResourceDictionary>
